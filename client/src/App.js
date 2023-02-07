@@ -3,10 +3,12 @@ import './App.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 function App() {
+  const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+  console.log(SERVER_URL);
   const [inputValue, setInputValue] = useState('');
   const [req, setReq] = useState('');
   const [response, setResponse] = useState('');
-  const res = 'HiHi';
+
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
@@ -16,16 +18,9 @@ function App() {
     setInputValue('');
 
     try {
-      const response = await axios.post(
-        'https://jsonplaceholder.typicode.com/posts',
-        {
-          title: 'foo',
-          body: 'bar',
-          userId: 1
-        }
-      );
+      const response = await axios.get(SERVER_URL);
       const data = response.data;
-      setResponse(`ChittiRobot:  ${data.id}`);
+      setResponse(`ChittiRobot:  ${data}`);
       console.log(data);
     } catch (error) {
       console.error(error);
